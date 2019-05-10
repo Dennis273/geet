@@ -1,0 +1,28 @@
+{
+  "name": "geet",
+  "version": "0.1.0",
+  "description": "A command line tool to help handle git repo.",
+  "main": "index.js",
+  "repository": "https://github.com/Dennis273/geet.git",
+  "author": "Dennis273 <dennisc695@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "babel src -w --out-dir lib --extensions \".ts\""
+  },
+  "dependencies": {
+    "commander": "^2.20.0",
+    "simple-git": "^1.113.0",
+    "typescript": "^3.4.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "^12.0.0"
+  },
+  "bin": {
+    "geet": "./lib/index.js"
+  }
+}
