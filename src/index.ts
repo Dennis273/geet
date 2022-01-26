@@ -1,50 +1,58 @@
 #!/usr/bin/env node
-import program from 'commander'
-import path from 'path'
-import fs from 'fs'
-import url from 'url'
-import simpleGit from "simple-git";
-import { getConfig, setConfig } from './config'
-import { clone, result as gitResult } from './git'
-const git = simpleGit()
+import program from "commander";
+import { getConfig, setConfig } from "./config";
+import { clone, error as gitError } from "./git";
+import { SIGPIPE } from "constants";
+
+program.version("0.1.0");
 
 program
-  .version('0.1.0')
-
-program
-  .command('clone <url>')
-  .option('-f, --force')
-  .action((url, options) => {
-    const repoRoot = getConfig()['repoRoot']
-
+  .command("clone <url>")
+  .option("-f, --force")
+  .action(async (url, options) => {
+    const repoRoot = getConfig()["repoRoot"];
     if (repoRoot) {
-      const result = clone(url, repoRoot, options.force)
-      let log = ''
-      switch (result) {
-        case gitResult.EXT_NAME_NOT_GIT:
-          log = 'External name of given url is not \'.git\'.'
-          break
-        case gitResult.TARGET_DIR_EXIST:
-          log = 'Target directory already exists, use --force to overwirte.'
-        case gitResult.SUCCESS:
-          log = 'Clone success!'
+      try {
+        const result = await clone(url, repoRoot, options.force);
+        if (process.stdout.isTTY) {
+          console.log(`Cloning into '${result}'`);
+          console.log("Done.");
+        } else {
+          console.log(result);
+          process.on("SIGPIPE", () => {
+            process.exit;
+          });
+        }
+      } catch (err) {
+        let log = "";
+        switch (err) {
+          case gitError.ERR_TARGET_DIR_EXIST:
+            log = "Target directory already exists, use --force to overwirte.";
+            break;
+          case gitError.ERR_URL_NOT_VALID:
+            log = "Given url is not valid.";
+            break;
+          case gitError.ERR_EXT_NAME_NOT_GIT:
+            log = "External name of given url is not '.git'.";
+            break;
+        }
+        console.log(log);
+        process.exit(1);
       }
     } else {
-      console.error('Repo root not set')
+      console.error("Repo root is not set, use `geet set repoRoot <root>`.");
     }
+  });
 
-  })
+program.command("set <key> <value>").action((key, value) => {
+  setConfig(key, value);
+});
 
-program
-  .command('set <key> <value>')
-  .action((key, value) => {
-    setConfig(key, value)
-  })
+program.command("get <key>").action((key) => {
+  getConfig()[key];
+});
 
-program
-  .command('get <key>')
-  .action((key) => {
-    getConfig()[key]
-  })
-
-program.parse(process.argv)
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
+program.parse(process.argv);
