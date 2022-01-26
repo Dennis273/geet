@@ -1,6 +1,6 @@
 {
   "name": "@dennis273/geet",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "A command line tool to help handle git repo.",
   "repository": "https://github.com/Dennis273/geet.git",
   "author": "Dennis273 <dennisc695@gmail.com>",
