@@ -2,7 +2,6 @@
 import program from "commander";
 import { getConfig, setConfig } from "./config";
 import { clone, error as gitError } from "./git";
-import { SIGPIPE } from "constants";
 
 program.version("0.1.0");
 
@@ -15,7 +14,6 @@ program
       try {
         const result = await clone(url, repoRoot, options.force);
         if (process.stdout.isTTY) {
-          console.log(`Cloning into '${result}'`);
           console.log("Done.");
         } else {
           console.log(result);
