@@ -13,6 +13,7 @@
     "dist/**"
   ],
   "dependencies": {
+    "@types/node": "^18.6.4",
     "commander": "^2.20.3",
     "fs-extra": "^10.0.0",
     "typescript": "^4.5.5"
