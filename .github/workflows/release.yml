@@ -1,7 +1,11 @@
-name: Publish Package to npmjs
-on:
-  release:
-    types: [created]
+name: Release
+"on":
+  push:
+    branches:
+      - master
+      - next
+      - beta
+      - "*.x"
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -14,27 +18,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
       - name: Build
         run: pnpm run build
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 17
-          branches: |
-            [
-              '+([0-9])?(.{+([0-9]),x}).x',
-              'main',
-              'master',
-              'next',
-              'next-major',
-              {name: 'beta', prerelease: true},
-              {name: 'alpha', prerelease: true}
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm run semantic-release
