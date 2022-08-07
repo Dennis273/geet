@@ -7,7 +7,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "esbuild src/index.ts --platform=node --bundle --outfile=./dist/index.js"
+    "build": "esbuild src/index.ts --platform=node --bundle --outfile=./dist/index.js",
+    "prepare": "husky install"
   },
   "files": [
     "dist/**"
@@ -16,6 +17,9 @@
     "@types/node": "18.6.4",
     "commander": "2.20.3",
     "fs-extra": "10.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
     "typescript": "4.7.4"
   },
   "devDependencies": {
@@ -23,5 +27,8 @@
   },
   "bin": {
     "geet": "./dist/index.js"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
