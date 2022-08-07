@@ -3,8 +3,6 @@ import program from "commander";
 import { getConfig, setConfig } from "./config";
 import { clone, error as gitError } from "./git";
 
-program.version("0.1.0");
-
 program
   .command("clone <url>")
   .option("-f, --force")
