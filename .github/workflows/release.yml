@@ -27,3 +27,5 @@ jobs:
         run: pnpm run build
       - name: 🚀 Release
         run: pnpm run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
