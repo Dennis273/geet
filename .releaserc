@@ -1,10 +1,12 @@
 {
   "branches": [
-    "main",
+    {
+      "name": "main",
+      "prerelease": false
+    },
     {
       "name": "next",
       "prerelease": true
-    },
-    "semantic-release"
+    }
   ]
 }
