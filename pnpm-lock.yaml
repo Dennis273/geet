@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/node': 18.6.4
-  commander: 2.20.3
+  commander: 11.1.0
   esbuild: 0.14.53
   fs-extra: 10.1.0
   husky: 8.0.1
@@ -13,7 +13,7 @@ specifiers:
 
 devDependencies:
   '@types/node': 18.6.4
-  commander: 2.20.3
+  commander: 11.1.0
   esbuild: 0.14.53
   fs-extra: 10.1.0
   husky: 8.0.1
@@ -553,8 +553,9 @@ packages:
     resolution: {integrity: sha512-3tlv/dIP7FWvj3BsbHrGLJ6l/oKh1O3TcgBqMn+yyCagOxc23fyzDS6HypQbgxWbkpDnf52p1LuR4eWDQ/K9WQ==}
     dev: true
 
-  /commander/2.20.3:
-    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+  /commander/11.1.0:
+    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
+    engines: {node: '>=16'}
     dev: true
 
   /commander/9.4.0:
