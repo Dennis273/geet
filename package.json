@@ -16,7 +16,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "18.6.4",
+    "@types/node": "18.19.72",
     "commander": "2.20.3",
     "esbuild": "0.14.53",
     "fs-extra": "10.1.0",
