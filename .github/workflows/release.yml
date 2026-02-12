@@ -5,26 +5,28 @@ name: Release
       - main
       - next
 jobs:
-  publish:
+  ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to npm
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          version: 6
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16.x"
-          registry-url: "https://registry.npmjs.org"
-          cache: "pnpm"
+          bun-version: latest
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
+      - name: Lint
+        run: bun run lint
+      - name: Test
+        run: bun test
       - name: Build
-        run: pnpm run build
-      - name: 🚀 Release
-        run: pnpm run semantic-release
+        run: bun run build
+      - name: Setup Node.js for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Release
+        run: bunx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

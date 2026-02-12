@@ -1,36 +1,34 @@
-import fs from "fs";
-import path from "path";
-import os from "os";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+
 const rootPath = os.homedir();
-const configFileName = ".geetrc"; // json
+const configFileName = ".geetrc";
 const filePath = path.join(rootPath, configFileName);
 
-interface IConfig {
+interface Config {
   repoRoot?: string;
+  [key: string]: string | undefined;
 }
 
-function readFileContent() {
+function readFileContent(): Config {
   if (fs.existsSync(filePath)) {
     const content = fs.readFileSync(filePath, "utf8");
-    const config = JSON.parse(content);
-    return config as IConfig;
-  } else {
-    return {} as IConfig;
+    return JSON.parse(content) as Config;
   }
+  return {};
 }
 
-function writeFileContent(content: any) {
-  fs.writeFileSync(filePath, JSON.stringify(content), { flag: "w" });
+function writeFileContent(content: Config): void {
+  fs.writeFileSync(filePath, JSON.stringify(content, null, 2), { flag: "w" });
 }
 
-function getConfig() {
+export function getConfig(): Config {
   return readFileContent();
 }
 
-function setConfig(key: string, value: any) {
+export function setConfig(key: string, value: string): void {
   const config = readFileContent();
   config[key] = value;
   writeFileContent(config);
 }
-
-export { getConfig, setConfig };
